@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+:root {
+    --primary-color: #0A4D8C;
+    --secondary-color: #F5F1E8;
+    --text-color: #2C2C2C;
+    --white-color: #FFFFFF;
+}
