@@ -1,0 +1,18 @@
+.footer {
+    background-color: var(--primary-color);
+    color: white;
+
+    padding: 25px 60px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer h3 {
+    font-size: 24px;
+}
+
+.footer p {
+    margin: 0;
+}
