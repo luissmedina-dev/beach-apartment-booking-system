@@ -1,0 +1,25 @@
+.rules {
+    max-width: 1000px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
+
+.rules h1 {
+    color: var(--primary-color);
+    margin-bottom: 40px;
+
+    text-align: center;
+}
+
+.rule-item {
+    margin-bottom: 40px;
+}
+
+.rule-item h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.rule-item p {
+    line-height: 1.6;
+}
