@@ -59,7 +59,9 @@
         <img src="../assets/images/bombinhas.jpeg" alt="Imagem 3">
     </div>
     <div class="gallery-button">
-        <button>Ver galeria completa</button>
+        <form action="../public/gallery.php">
+            <button>Ver galeria completa</button>
+        </form>
     </div>
 </section>
 

@@ -1,0 +1,74 @@
+.availability {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding-bottom: 80px;
+
+    text-align: center;
+}
+
+.availability h1 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+
+    font-size: 40px;
+}
+
+.availability p {
+    line-height: 1.6;
+}
+
+.calendar {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 10px;
+
+    margin-top: 40px;
+
+}
+
+.calendar-day {
+    height: 80px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+}
+
+.calendar-day {
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.calendar-day:hover {
+    transform: translateY(-2px);
+}
+
+.calendar-day:nth-child(even){
+    background-color: rgb(190, 236, 198);
+}
+
+.calendar-day:nth-child(odd){
+    background-color: rgb(255, 240, 240);
+}
+
+.caption {
+    margin-top: 50px;
+}
+
+.caption h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.caption p {
+    line-height: 1.6;
+}
+

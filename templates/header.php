@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../assets/css/footer.css">
     <link rel="stylesheet" href="../assets/css/rules.css">
     <link rel="stylesheet" href="../assets/css/gallery.css">
+    <link rel="stylesheet" href="../assets/css/availability.css">
     <title>Home</title>
 </head>
 <body>
