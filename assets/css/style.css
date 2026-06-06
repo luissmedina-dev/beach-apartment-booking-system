@@ -14,3 +14,7 @@ body {
     --text-color: #2C2C2C;
     --white-color: #FFFFFF;
 }
+
+html {
+    scroll-behavior: smooth;
+}

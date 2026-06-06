@@ -9,7 +9,9 @@
     <div class="hero-content">
         <h1>Apartamento em Bombinhas-SC</h1>
         <p>Conforto e tranquilidade para suas férias na praia</p>
-        <button>Ver Disponibilidade</button>
+        <form action="../public/availability.php">
+            <button>Ver Disponibilidade</button>
+        </form>
     </div>
 </section>
 

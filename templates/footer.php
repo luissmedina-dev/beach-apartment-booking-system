@@ -1,3 +1,12 @@
+<div class="contact-information" id="contact">
+    <h3>Apartamento Bombinhas</h3>
+    <p><strong>WhatsApp:</strong> (47) 99999-9999</p>
+    <p><strong>Email:</strong> contato@email.com</p>
+    <p><strong>Instagram:</strong> @apartamento_bombinhas</p>
+    <div class="contact-btn">
+        <a href="https://wa.me/5547999999999" target="_blank"> Fale Conosco </a>
+    </div>
+</div>
 <footer class="footer">
     <div class="footer-brand">
         <h3>Bombinhas</h3>
