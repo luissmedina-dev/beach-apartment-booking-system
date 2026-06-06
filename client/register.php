@@ -8,10 +8,10 @@ $role = "client";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recebe dados
-    $name = trim($_POST["name"]);
-    $email = trim($_POST["email"]);
-    $password = $_POST["password"];
-    $confirmPassword = $_POST["confirmpassword"];
+    $name = trim(filter_input(INPUT_POST, "name"));
+    $email = trim(filter_input(INPUT_POST, "email"));
+    $password = filter_input(INPUT_POST, "password");
+    $confirmPassword = filter_input(INPUT_POST, "confirmpassword");
 
     // Validacoes basicas
     if(strlen($password) < 8){
@@ -71,16 +71,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 
-
-if(!empty($errors)) {
-    
-    foreach($errors as $error){
-        echo $error . "<br>";
-    }
-
-}
-
 ?>
+
+<?php if(!empty($errors)): ?>
+    <div class="error-message">
+        <?php foreach($errors as $error): ?>
+            <p><?= $error ?></p>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 
 <div class="form-register">
     <form action="" method="post">
