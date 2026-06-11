@@ -35,13 +35,14 @@ CREATE TABLE users (
 
 CREATE TABLE reservations (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT, 
-    checkin_date DATE,
-    checkout_date DATE,
+    user_id INT NOT NULL, 
+    checkin_date DATE NOT NULL,
+    checkout_date DATE NOT NULL,
     total_price DECIMAL(10,2),
     status VARCHAR(100),
-    created_at DATE,
-    updated_at DATE
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FORIGN KEY (user_id) REFERENCES users(id)
 );
 
 /* 
