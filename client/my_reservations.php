@@ -70,10 +70,11 @@ require_once("../templates/navbar.php");
                     <?= $reservation['status']; ?>
                 </p>
 
+                <?php if($reservation['status'] == "Solicitado"): ?>
                 <a href="cancel_request.php?id=<?= $reservation['id'] ?>">
                     Cancelar reserva
                 </a>
-
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>

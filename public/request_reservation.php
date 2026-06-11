@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     if(empty($errors)){
 
         $user_id =  $_SESSION['user_id'];
-        $status = 'pending';
+        $status = 'Solicitado';
 
         $daily_price = 300;
 
