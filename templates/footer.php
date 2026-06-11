@@ -4,7 +4,7 @@
     <p><strong>Email:</strong> contato@email.com</p>
     <p><strong>Instagram:</strong> @apartamento_bombinhas</p>
     <div class="contact-btn">
-        <a href="https://wa.me/5547999999999" target="_blank"> Fale Conosco </a>
+        <a href="https://wa.me/5547999999999?text=Olá,%20gostaria%20de%20consultar%20a%20disponibilidade%20do%20apartamento." target="_blank"> Fale Conosco </a>
     </div>
 </div>
 <footer class="footer">
