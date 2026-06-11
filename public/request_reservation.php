@@ -24,7 +24,18 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
         $user_id =  $_SESSION['user_id'];
         $status = 'pending';
-        $total_price = 0;
+
+        $daily_price = 300;
+
+        $entrada = new DateTime($checkin);
+        $saida = new DateTime($checkout);
+
+        $difference = $entrada->diff($saida);
+
+        $days = $difference->days;
+
+        $total_price = $days * $daily_price;
+
 
         $stmt = $conn->prepare("INSERT INTO reservations
                                 (user_id, checkin_date, checkout_date, total_price, status)

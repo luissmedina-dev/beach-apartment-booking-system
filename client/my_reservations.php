@@ -35,7 +35,12 @@ require_once("../templates/navbar.php");
     <?php if(empty($reservations)): ?>
         <p>Você ainda não possui reservas.</p>
     <?php else: ?>
-        <?php foreach($reservations as $reservation): ?>
+        <?php foreach($reservations as $reservation): 
+             $entrada = new DateTime($reservation['checkin_date']);
+                $saida = new DateTime($reservation['checkout_date']);
+
+                $days = $entrada->diff($saida)->days;
+            ?>
             <div class="reservation-card">
 
                 <h3>Reserva #<?= $reservation['id'] ?></h3>
@@ -51,9 +56,23 @@ require_once("../templates/navbar.php");
                 </p>
 
                 <p>
+                    Noites:
+                    <?= $days ?>
+                </p>
+
+                <p>
+                    Valor:
+                    R$ <?= number_format($reservation['total_price'], 2, ",", "."); ?>
+                </p>
+            
+                <p>
                     Status:
                     <?= $reservation['status']; ?>
                 </p>
+
+                <a href="cancel_request.php?id=<?= $reservation['id'] ?>">
+                    Cancelar reserva
+                </a>
 
             </div>
         <?php endforeach; ?>
