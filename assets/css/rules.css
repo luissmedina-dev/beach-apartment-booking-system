@@ -1,25 +1,108 @@
-.rules {
-    max-width: 1000px;
-    margin: 80px auto;
-    padding: 0 20px;
+.rules-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 70px 40px 100px;
 }
 
-.rules h1 {
-    color: var(--primary-color);
-    margin-bottom: 40px;
-
+.rules-header {
     text-align: center;
+    margin-bottom: 56px;
 }
 
-.rule-item {
-    margin-bottom: 40px;
+.rules-header h1 {
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 14px;
 }
 
-.rule-item h2 {
+.rules-header p {
+    font-size: 15px;
+    color: #777;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.rule-card {
+    background: #fff;
+    border: 1px solid #e5e8ec;
+    border-radius: 14px;
+    padding: 28px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.rule-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+}
+
+.rule-card--highlight {
+    background-color: #eaf1f8;
+    border-color: #b5d4f4;
+}
+
+.rule-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+}
+
+.rule-card h2 {
+    font-size: 16px;
+    font-weight: 700;
     color: var(--primary-color);
     margin-bottom: 10px;
 }
 
-.rule-item p {
-    line-height: 1.6;
+.rule-card p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.7;
+}
+
+.rules-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 56px;
+    padding: 28px 36px;
+    background: var(--primary-color);
+    border-radius: 14px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.rules-cta p {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+}
+
+.rules-cta-btn {
+    display: inline-block;
+    padding: 12px 28px;
+    background-color: #F0CB8A;
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.15s;
+    white-space: nowrap;
+}
+
+.rules-cta-btn:hover {
+    background-color: #e8be70;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+    .rules-grid { grid-template-columns: 1fr; }
+    .rules-header h1 { font-size: 28px; }
 }

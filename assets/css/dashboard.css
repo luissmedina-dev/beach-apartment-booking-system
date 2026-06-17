@@ -1,0 +1,379 @@
+/* ===========================
+   DASHBOARD DO CLIENTE
+   =========================== */
+
+.dashboard-page {
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Topbar */
+.dash-topbar {
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.dash-topbar-brand {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #F0CB8A;
+    text-decoration: none;
+}
+
+.dash-topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dash-topbar-name {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dash-topbar-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #F0CB8A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.dash-topbar-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-left: 12px;
+}
+
+.dash-topbar-logout:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Layout principal */
+.dash-body {
+    display: flex;
+    flex: 1;
+}
+
+/* Sidebar */
+.dash-sidebar {
+    width: 230px;
+    background-color: #fff;
+    border-right: 1px solid #e5e8ec;
+    padding: 28px 0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.dash-sidebar-section {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #b0b5bc;
+    padding: 0 20px;
+    margin-bottom: 6px;
+    margin-top: 20px;
+}
+
+.dash-sidebar-section:first-child {
+    margin-top: 0;
+}
+
+.dash-sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #4a5568;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    font-weight: 500;
+}
+
+.dash-sidebar a:hover {
+    background-color: #f7f9fb;
+    color: var(--primary-color);
+}
+
+.dash-sidebar a.active {
+    background-color: #eaf1f8;
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.dash-sidebar a span.icon {
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+/* Área de conteúdo */
+.dash-content {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+}
+
+.dash-page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 4px;
+}
+
+.dash-page-subtitle {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 28px;
+}
+
+/* Cards de resumo (topo) */
+.dash-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.dash-summary-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #e5e8ec;
+}
+
+.dash-summary-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #9aa0a8;
+    margin-bottom: 8px;
+}
+
+.dash-summary-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.dash-summary-value.gold {
+    color: #c79a2e;
+}
+
+/* Seção de reservas */
+.dash-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.dash-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.dash-section-link {
+    font-size: 13px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.dash-section-link:hover {
+    text-decoration: underline;
+}
+
+/* Lista de reservas */
+.dash-reservations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dash-reservation-card {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e8ec;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: box-shadow 0.2s;
+}
+
+.dash-reservation-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+}
+
+.dash-res-id {
+    font-size: 12px;
+    font-weight: 700;
+    color: #aaa;
+    min-width: 60px;
+}
+
+.dash-res-dates {
+    flex: 1;
+}
+
+.dash-res-dates strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 2px;
+}
+
+.dash-res-dates span {
+    font-size: 12px;
+    color: #888;
+}
+
+.dash-res-nights {
+    font-size: 13px;
+    color: #666;
+    min-width: 70px;
+    text-align: center;
+}
+
+.dash-res-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary-color);
+    min-width: 100px;
+    text-align: right;
+}
+
+.dash-res-status {
+    min-width: 100px;
+    text-align: right;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-solicitado {
+    background-color: #fff7e6;
+    color: #c79a2e;
+}
+
+.status-confirmado {
+    background-color: #eaf7f0;
+    color: #1e8449;
+}
+
+.status-cancelado {
+    background-color: #fef0f0;
+    color: #c0392b;
+}
+
+.status-concluido {
+    background-color: #edf2f7;
+    color: #5a6471;
+}
+
+.dash-res-cancel {
+    font-size: 12px;
+    color: #c0392b;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.dash-res-cancel:hover {
+    text-decoration: underline;
+}
+
+/* Estado vazio */
+.dash-empty {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px dashed #d0d5dd;
+    padding: 50px 30px;
+    text-align: center;
+    color: #aaa;
+}
+
+.dash-empty p {
+    font-size: 15px;
+    margin-bottom: 16px;
+    color: #888;
+}
+
+.dash-empty a {
+    display: inline-block;
+    padding: 10px 24px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.dash-empty a:hover {
+    background-color: #0a4070;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+    .dash-sidebar {
+        display: none;
+    }
+
+    .dash-content {
+        padding: 20px 16px;
+    }
+
+    .dash-reservation-card {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .dash-res-price,
+    .dash-res-status {
+        text-align: left;
+    }
+}
