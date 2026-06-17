@@ -1,64 +1,85 @@
-<?php 
+<?php
     require_once("../templates/header.php");
     require_once("../templates/navbar.php");
 ?>
 
-<section class="rules">
-    <h1>Regras de Utilização</h1>
-    <article class="rule-item">
-        <h2>1. Horários de Silêncio</h2>
-        <p>Solicitamos que os hóspedes respeitem os horários de silêncio estabelecidos pelo condomínio, especialmente entre 22h e 08h, evitando sons altos, festas ou qualquer atividade que possa causar transtornos aos demais moradores</p>
-    </article>
+<section class="rules-page">
 
-    <article class="rule-item">
-        <h2>2. Capacidade Máxima de Hóspedes</h2>
-        <p>A ocupação do apartamento deve respeitar o limite máximo informado no momento da reserva. Não é permitido exceder a capacidade estabelecida sem autorização prévia.</p>
-    </article>
+    <div class="rules-header">
+        <span class="section-tag">Antes de reservar</span>
+        <h1>Regras de utilização</h1>
+        <p>Para garantir uma estadia agradável a todos, pedimos que leia e respeite as regras do apartamento e do condomínio.</p>
+    </div>
 
-    <article class="rule-item">
-        <h2>3. Conservação do Imóvel</h2>
-        <p>Os hóspedes comprometem-se a utilizar o apartamento, móveis, eletrodomésticos e utensílios com cuidado e responsabilidade durante toda a estadia.</p>
-    </article>
-    
-    <article class="rule-item">
-        <h2>4. Danos e Quebras</h2>
-        <p>Quaisquer danos causados ao imóvel, móveis, equipamentos ou objetos decorativos deverão ser comunicados imediatamente.
+    <div class="rules-grid">
 
-            Custos referentes à substituição ou reparo poderão ser cobrados do responsável pela reserva.</p>
-    </article>
+        <article class="rule-card">
+            <div class="rule-icon">🌙</div>
+            <h2>Silêncio noturno</h2>
+            <p>Respeite o horário de silêncio entre 22h e 8h, evitando sons altos e atividades que perturbem outros moradores.</p>
+        </article>
 
-    <article class="rule-item">
-        <h2>5. Limpeza e Organização</h2>
-        <p>Solicita-se que o imóvel seja mantido em condições adequadas de higiene e organização durante a estadia.</p>
-    </article>
+        <article class="rule-card">
+            <div class="rule-icon">👥</div>
+            <h2>Capacidade máxima</h2>
+            <p>A ocupação deve respeitar o limite de até 6 hóspedes. Exceder a capacidade sem autorização prévia não é permitido.</p>
+        </article>
 
-    <article class="rule-item">
-        <h2>6. Animais de Estimação</h2>
-        <p>A permanência de animais de estimação está sujeita às regras previamente informadas pelos proprietários e pelo condomínio.</p>
-    </article>
+        <article class="rule-card">
+            <div class="rule-icon">🏠</div>
+            <h2>Conservação do imóvel</h2>
+            <p>Use os móveis, eletrodomésticos e utensílios com cuidado. O imóvel deve ser entregue nas mesmas condições da chegada.</p>
+        </article>
 
-    <article class="rule-item">
-        <h2>7. Áreas Comuns</h2>
-        <p>As áreas comuns do condomínio devem ser utilizadas de acordo com as normas internas estabelecidas pela administração condominial.</p>
-    </article>
+        <article class="rule-card">
+            <div class="rule-icon">⚠️</div>
+            <h2>Danos e quebras</h2>
+            <p>Comunique imediatamente qualquer dano causado. Custos de reparo ou substituição poderão ser cobrados do responsável.</p>
+        </article>
 
-    <article class="rule-item">
-        <h2>8. Estacionamentos</h2>
-        <p>As vagas disponibilizadas devem ser utilizadas exclusivamente pelos hóspedes autorizados e conforme as orientações do condomínio.</p>
-    </article>
+        <article class="rule-card">
+            <div class="rule-icon">🧹</div>
+            <h2>Limpeza e organização</h2>
+            <p>Mantenha o imóvel limpo e organizado durante a estadia. Descarte o lixo corretamente nos locais indicados.</p>
+        </article>
 
-    <article class="rule-item">
-        <h2>9. Cancelamentos e Alterações</h2>
-        <p>Pedidos de cancelamento ou alteração de datas devem ser realizados com antecedência e estarão sujeitos à disponibilidade do imóvel e às políticas definidas pelos proprietários.</p>
-    </article>
+        <article class="rule-card">
+            <div class="rule-icon">🐾</div>
+            <h2>Animais de estimação</h2>
+            <p>Pets são permitidos mediante autorização prévia dos proprietários e conforme as regras do condomínio.</p>
+        </article>
 
-    <article class="rule-item">
-        <h2>10. Aceitação dos Termos</h2>
-        <p>Ao realizar uma reserva, o hóspede declara estar ciente e de acordo com todas as regras de utilização do imóvel e do condomínio.</p>
-    </article>
+        <article class="rule-card">
+            <div class="rule-icon">🏢</div>
+            <h2>Áreas comuns</h2>
+            <p>As áreas comuns do condomínio devem ser utilizadas conforme as normas internas da administração condominial.</p>
+        </article>
+
+        <article class="rule-card">
+            <div class="rule-icon">🚗</div>
+            <h2>Estacionamento</h2>
+            <p>A vaga disponibilizada é de uso exclusivo dos hóspedes autorizados, conforme as orientações do condomínio.</p>
+        </article>
+
+        <article class="rule-card">
+            <div class="rule-icon">📅</div>
+            <h2>Cancelamentos</h2>
+            <p>Alterações ou cancelamentos devem ser solicitados com antecedência e estão sujeitos à política dos proprietários.</p>
+        </article>
+
+        <article class="rule-card rule-card--highlight">
+            <div class="rule-icon">✅</div>
+            <h2>Aceitação dos termos</h2>
+            <p>Ao realizar a reserva, o hóspede declara estar ciente e de acordo com todas as regras do imóvel e do condomínio.</p>
+        </article>
+
+    </div>
+
+    <div class="rules-cta">
+        <p>Está de acordo? Verifique a disponibilidade e garanta sua estadia.</p>
+        <a href="../public/availability.php" class="rules-cta-btn">Ver disponibilidade</a>
+    </div>
 
 </section>
 
-<?php
-    require_once("../templates/footer.php");
-?>
+<?php require_once("../templates/footer.php"); ?>
