@@ -2,11 +2,12 @@
 
 require_once("../config/connection.php");
 
+session_start();
+
 $errors = [];
 $success = false;
 $role = "client";
 
-session_start();
 
 if(isset($_SESSION['user_id'])) {
     header("Location: dashboard.php");
@@ -50,8 +51,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors[] = "Este e-mail já está cadastrado.";
         } else {
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO users (name, email, password, role)
-                                    VALUES (:name, :email, :password, :role)");
+            $stmt = $conn->prepare("INSERT INTO users (name, email, password, role, created_at, updated_at)
+                                    VALUES (:name, :email, :password, :role, NOW(), NOW())");
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":email", $email);
             $stmt->bindParam(":password", $passwordHash);
