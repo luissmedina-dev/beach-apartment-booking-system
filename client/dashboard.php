@@ -146,7 +146,7 @@ $initials  = strtoupper($nameParts[0][0] . (count($nameParts) > 1 ? end($namePar
                             <span class="dash-res-price">R$ <?= number_format($reservation['total_price'], 2, ',', '.') ?></span>
                             <span class="dash-res-status">
                                 <span class="status-badge <?= $statusClass ?>"><?= htmlspecialchars($reservation['status']) ?></span>
-                                <?php if($reservation['status'] == 'Solicitado'): ?>
+                                <?php if($reservation['status'] == 'solicitado'): ?>
                                     <a href="cancel_request.php?id=<?= $reservation['id'] ?>" class="dash-res-cancel">Cancelar</a>
                                 <?php endif; ?>
                             </span>

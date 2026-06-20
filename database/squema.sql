@@ -39,7 +39,7 @@ CREATE TABLE reservations (
     checkin_date DATE NOT NULL,
     checkout_date DATE NOT NULL,
     total_price DECIMAL(10,2),
-    status VARCHAR(100),
+    status VARCHAR(100) DEFAULT 'solicitado',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)

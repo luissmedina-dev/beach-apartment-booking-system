@@ -67,7 +67,7 @@ require_once("../templates/navbar.php");
                     <span class="myres-badge <?= $statusClass ?>"><?= htmlspecialchars($r['status']) ?></span>
                 </div>
 
-                <?php if($r['status'] == 'Solicitado'): ?>
+                <?php if($r['status'] == 'solicitado'): ?>
                     <a href="cancel_request.php?id=<?= $r['id'] ?>" class="myres-cancel-btn"
                        onclick="return confirm('Tem certeza que deseja cancelar esta reserva?')">
                         Cancelar

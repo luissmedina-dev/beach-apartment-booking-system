@@ -51,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if(empty($errors)) {
         $user_id     = $_SESSION['user_id'];
-        $status      = 'Solicitado';
+        $status      = 'solicitado';
         $daily_price = 300;
 
         $entrada     = new DateTime($checkin);

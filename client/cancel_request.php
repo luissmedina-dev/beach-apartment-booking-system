@@ -15,7 +15,7 @@ if(isset($_GET['id'])){
     $user_id = $_SESSION['user_id'];
 
     $stmt = $conn->prepare("UPDATE reservations 
-                            SET status = 'Cancelado'
+                            SET status = 'cancelado'
                             WHERE id = :id
                             AND user_id = :user_id"
                             );
