@@ -2,79 +2,31 @@
 
 require_once("../helpers/auth.php");
 require_once("../config/connection.php");
+require_once("../dao/ReservationDAO.php");
 
 session_start();
 
 verifyAdmin();
 
+$reservationDAO = new ReservationDAO($conn);
+$status = $_GET['status'] ?? "";
+$reservations = $reservationDAO->getLatestReservations($status);
+
 
 // Total de solicitacoes pendentes 
-$stmt = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE status = 'solicitado'");
-$stmt->execute();
-
-$pendingReservations = $stmt->fetchColumn();
+$pendingReservations = $reservationDAO->countByStatus("solicitado");
 
 // Reservas confirmadas
-$stmt = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE status = 'confirmado'");
-$stmt->execute();
-
-$confirmReservations = $stmt->fetchColumn();
+$confirmReservations = $reservationDAO->countByStatus("confirmado");
 
 // Cancelamentos pendentes 
-$stmt = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE status = 'cancelamento solicitado'");
-$stmt->execute();
-
-$pendingCancellations = $stmt->fetchColumn();
+$pendingCancellations = $reservationDAO->countByStatus("cancelamento solicitado");
 
 // Reservas canceladas
-$stmt = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE status = 'cancelado'");
-$stmt->execute();
-
-$cancelReservations = $stmt->fetchColumn();
+$cancelReservations = $reservationDAO->countByStatus("cancelado");
 
 // Receita estimada
-$stmt = $conn->prepare("SELECT SUM(total_price) FROM reservations WHERE status = 'confirmado'");
-$stmt->execute();
-
-$estimatedRevenue = $stmt->fetchColumn();
-
-// Lista de reservas
-$status = $_GET['status'] ?? "";
-
-
-$sql = "
-        SELECT 
-            reservations.id,
-            users.name,
-            reservations.checkin_date,
-            reservations.checkout_date,
-            reservations.total_price,
-            reservations.status
-
-        FROM reservations
-
-        INNER JOIN users 
-        ON reservations.user_id = users.id
-        ";
-
-if(!empty($status)){
-
-    $sql .= " WHERE reservations.status = :status";
-
-}
-
-$sql .= " ORDER BY reservations.created_at DESC LIMIT 5";
-
-$stmt = $conn->prepare($sql);
-
-if(!empty($status)){
-
-    $stmt->bindParam(":status", $status);
-
-}
-$stmt->execute();
-
-$reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$estimatedRevenue = $reservationDAO->getEstimativedRevenue();
 
 require_once("../templates/admin_header.php");
 ?>
