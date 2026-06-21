@@ -64,7 +64,7 @@ class ReservationDAO {
 
     }
 
-    public function getReservations($status = "", $search = "", $dateFrom = "", $dateTo = ""){
+    public function getReservationsFiltered($status = "", $search = "", $dateFrom = "", $dateTo = ""){
 
         $sql = "SELECT 
                     reservations.id,
@@ -104,7 +104,7 @@ class ReservationDAO {
             $sql .= " WHERE ".implode(" AND ", $conditions);
         }
 
-        $sql .= " ORDER BY reservations.create_at DESC";
+        $sql .= " ORDER BY reservations.created_at DESC";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -116,5 +116,14 @@ class ReservationDAO {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    }
+
+    public function getStatusSumary(){
+        return [
+            "solicitado" => $this->countByStatus("solicitado"),
+            "confirmado" => $this->countByStatus("confirmado"),
+            "cancelado" => $this->countByStatus("cancelado"),
+            "cancelamento solicitado" => $this->countByStatus("cancelamento solicitado")
+        ];
     }
 }

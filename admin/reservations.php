@@ -9,81 +9,24 @@ session_start();
 
 verifyAdmin();
 
+$reservationDAO = new ReservationDAO($conn);
+
 // ── Filtros vindos da URL ──────────────────────────────────────────────
 $status    = $_GET['status']     ?? "";
 $search    = trim($_GET['search'] ?? "");
 $dateFrom  = $_GET['date_from']  ?? "";
 $dateTo    = $_GET['date_to']    ?? "";
 
-// ── Monta a query dinamicamente, sempre com WHERE antes de ORDER BY ────
-$sql = "
-        SELECT 
-            reservations.id,
-            users.name,
-            reservations.checkin_date,
-            reservations.checkout_date,
-            reservations.total_price,
-            reservations.status
-
-        FROM reservations
-
-        INNER JOIN users 
-        ON reservations.user_id = users.id
-        ";
-
-$conditions = [];
-$params     = [];
-
-if (!empty($status)) {
-    $conditions[] = "reservations.status = :status";
-    $params[':status'] = $status;
-}
-
-if (!empty($search)) {
-    $conditions[] = "users.name LIKE :search";
-    $params[':search'] = '%' . $search . '%';
-}
-
-if (!empty($dateFrom)) {
-    $conditions[] = "reservations.checkin_date >= :date_from";
-    $params[':date_from'] = $dateFrom;
-}
-
-if (!empty($dateTo)) {
-    $conditions[] = "reservations.checkout_date <= :date_to";
-    $params[':date_to'] = $dateTo;
-}
-
-if (!empty($conditions)) {
-    $sql .= " WHERE " . implode(" AND ", $conditions);
-}
-
-$sql .= " ORDER BY reservations.created_at DESC";
-
-$stmt = $conn->prepare($sql);
-foreach ($params as $key => $value) {
-    $stmt->bindValue($key, $value);
-}
-$stmt->execute();
-
-$reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$reservations = $reservationDAO->getReservationsFiltered($status, $search, $dateFrom, $dateTo);
 
 // ── Contagem por status (para os contadores no topo dos filtros) ───────
-$stmt = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE status = 'solicitado'");
-$stmt->execute();
-$countSolicitado = $stmt->fetchColumn();
+$countSolicitado = $reservationDAO->countByStatus("solicitado");
 
-$stmt = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE status = 'confirmado'");
-$stmt->execute();
-$countConfirmado = $stmt->fetchColumn();
+$countConfirmado = $reservationDAO->countByStatus("confirmado");
 
-$stmt = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE status = 'cancelado'");
-$stmt->execute();
-$countCancelado = $stmt->fetchColumn();
+$countCancelado = $reservationDAO->countByStatus("cancelado");
 
-$stmt = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE status = 'cancelamento solicitado'");
-$stmt->execute();
-$countCancelamentoSolicitado = $stmt->fetchColumn();
+$countCancelamentoSolicitado = $reservationDAO->countByStatus("cancelamento solicitado");
 
 // ── Mensagens flash (definidas em update_reservations.php) ─────────────
 $flashSuccess = $_SESSION['flash_success'] ?? null;
