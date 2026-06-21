@@ -3,6 +3,7 @@
 require_once("../helpers/auth.php");
 require_once("../config/connection.php");
 require_once("../helpers/flash.php");
+require_once("../dao/ReservationDAO.php");
 
 session_start();
 

@@ -63,4 +63,58 @@ class ReservationDAO {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+    public function getReservations($status = "", $search = "", $dateFrom = "", $dateTo = ""){
+
+        $sql = "SELECT 
+                    reservations.id,
+                    users.name,
+                    reservations.checkin_date,
+                    reservations.checkout_date,
+                    reservations.total_price,
+                    reservations.status
+                FROM reservations
+                INNER JOIN users ON reservations.user_id = users.id
+                ";
+
+        $conditions = [];
+        $params = [];
+
+        if(!empty($status)){
+            $conditions[] = "reservations.status = :status";
+            $params[':status'] = $status;
+        }
+
+        if(!empty($search)){
+            $conditions[] = "users.name LIKE :search";
+            $params[':search'] = "%"."search"."%";
+        }
+
+        if(!empty($dateFrom)){
+            $conditions[] = "reservations.checkin_date >= :date_from";
+            $params[':date_from'] = $dateFrom;
+        }
+
+        if(!empty($dateTo)){
+            $conditions[] = "reservations.checkout_date <= :date_to";
+            $params[':date_to'] = $dateTo;
+        }
+
+        if(!empty($conditions)){
+            $sql .= " WHERE ".implode(" AND ", $conditions);
+        }
+
+        $sql .= " ORDER BY reservations.create_at DESC";
+
+        $stmt = $this->conn->prepare($sql);
+
+        foreach($params as $key => $value){
+            $stmt->bindValue($key, $value);
+        }
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
 }
