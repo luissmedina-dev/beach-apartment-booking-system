@@ -2,6 +2,7 @@
 
 require_once("../helpers/auth.php");
 require_once("../config/connection.php");
+require_once("../helpers/flash.php");
 
 session_start();
 
@@ -179,6 +180,7 @@ require_once("../templates/admin_header.php");
     <?php else: ?>
 
         <!-- Tabela — visível em telas maiores -->
+        <?php showFlash(); ?>
         <div class="admin-table-wrap res-table-desktop">
             <table class="admin-table">
                 <thead>

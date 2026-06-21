@@ -819,6 +819,24 @@
     gap: 8px;
 }
 
+.alert{
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+
+.success{
+    background:#d1fae5;
+    color:#065f46;
+}
+
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
 /* ── Responsivo ──────────────────────────────── */
 @media (max-width: 900px) {
     .res-table-desktop { display: none; }
