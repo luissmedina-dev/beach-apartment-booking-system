@@ -42,44 +42,33 @@ if (empty($id) || !isset($actionToStatus[$action])) {
 
 $status = $actionToStatus[$action];
 
+// Verifica se a reserva existe ANTES de qualquer operação no banco
 $reservation = $reservationDAO->findByID($id);
+
+if(!$reservation){
+    setFlash("error", "Reserva não encontrada.");
+    header("Location: reservations.php");
+    exit();
+}
 
 $currentStatus = $reservation['status'];
 
+// Mapa de transições permitidas por status atual
 $allowedActions = [
     "solicitado" => [
         "confirm",
         "cancel",
     ],
-
-    "confirmado" => [
-
-    ],
-
+    "confirmado" => [],
     "cancelamento solicitado" => [
         "approve_cancel",
         "reject_cancel"
     ],
-
-    "cancelado" => [
-
-    ]
+    "cancelado" => []
 ];
 
-
 if(!isset($allowedActions[$currentStatus]) || !in_array($action, $allowedActions[$currentStatus])){
-    setFlash("error","Essa ação não é permitida.");
-    header("Location: reservations.php");
-    exit();
-}
-
-if(!$reservation){
-    header("Location: reservation.php");
-    exit();
-}
-
-if($reservation['status'] === "cancelado" && $action === "confirm"){
-    setFlash("error", "Reserva cancelada não pode ser confirmada.");
+    setFlash("error", "Essa ação não é permitida para o status atual da reserva.");
     header("Location: reservations.php");
     exit();
 }

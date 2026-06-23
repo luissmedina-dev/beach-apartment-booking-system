@@ -24,12 +24,12 @@ $stmtTotal->bindParam(":user_id", $user_id);
 $stmtTotal->execute();
 $totalReservations = $stmtTotal->fetchColumn();
 
-$stmtConfirmed = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE user_id = :user_id AND status = 'Confirmado'");
+$stmtConfirmed = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE user_id = :user_id AND status = 'confirmado'");
 $stmtConfirmed->bindParam(":user_id", $user_id);
 $stmtConfirmed->execute();
 $confirmedReservations = $stmtConfirmed->fetchColumn();
 
-$stmtValue = $conn->prepare("SELECT SUM(total_price) FROM reservations WHERE user_id = :user_id AND status != 'Cancelado'");
+$stmtValue = $conn->prepare("SELECT SUM(total_price) FROM reservations WHERE user_id = :user_id AND status != 'cancelado'");
 $stmtValue->bindParam(":user_id", $user_id);
 $stmtValue->execute();
 $totalValue = $stmtValue->fetchColumn() ?? 0;

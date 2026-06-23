@@ -9,16 +9,16 @@ function setFlash($type, $message){
 
 function showFlash(){
     if(isset($_SESSION['flash'])){
-        $type = $_SESSION['flash']['type'];
-        $message = $_SESSION['flash']['message'];
+        $type    = htmlspecialchars($_SESSION['flash']['type'],    ENT_QUOTES, 'UTF-8');
+        $message = htmlspecialchars($_SESSION['flash']['message'], ENT_QUOTES, 'UTF-8');
 
         echo "
-            <div class='alert $type'>
-                $message
+            <div class='alert {$type}'>
+                {$message}
             </div>
             ";
 
-            unset($_SESSION['flash']);
+        unset($_SESSION['flash']);
     }
 }
 

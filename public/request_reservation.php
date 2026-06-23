@@ -32,13 +32,20 @@ foreach ($reservasOcupadas as $r) {
 $datasOcupadasJson = json_encode(array_values(array_unique($datasOcupadas)));
 // ────────────────────────────────────────────────────────────────────────────
 
+// Valida se uma string é uma data real no formato YYYY-MM-DD
+function isValidDate($date) {
+    if(empty($date)) return false;
+    $d = DateTime::createFromFormat('Y-m-d', $date);
+    return $d && $d->format('Y-m-d') === $date;
+}
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $checkin  = filter_input(INPUT_POST, 'checkin');
     $checkout = filter_input(INPUT_POST, 'checkout');
 
-    if(empty($checkin) || empty($checkout)) {
-        $errors[] = 'Preencha as duas datas.';
+    if(!isValidDate($checkin) || !isValidDate($checkout)) {
+        $errors[] = 'Formato de data inválido.';
     } elseif($checkin >= $checkout) {
         $errors[] = 'A data de saída deve ser posterior à data de entrada.';
     } elseif($checkin < date('Y-m-d')) {

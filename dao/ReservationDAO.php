@@ -48,7 +48,7 @@ class ReservationDAO {
 
         }
 
-        $sql .= " ORDER BY reservations.created_at DESC LIMIT $limit";
+        $sql .= " ORDER BY reservations.created_at DESC LIMIT " . (int)$limit;
 
         $stmt = $this->conn->prepare($sql);
 
@@ -151,7 +151,7 @@ class ReservationDAO {
 
     public function getUnavailableDates(){
 
-        $stmt = $this->conn->prepare("SELECT checkin_date,checkout_date FROM reservations WHERE status IN ('confimado', 'cancelamento solicitado')");
+        $stmt = $this->conn->prepare("SELECT checkin_date,checkout_date FROM reservations WHERE status IN ('confirmado', 'cancelamento solicitado')");
 
         $stmt->execute();
 
@@ -173,7 +173,7 @@ class ReservationDAO {
 
     public function createReservation($user_id, $checkin, $checkout, $total_price, $status){
 
-        $stmt = $this->conn->prepare("INSERT INTO
+        $stmt = $this->conn->prepare("INSERT INTO reservations
                                     (
                                         user_id,
                                         checkin_date,
