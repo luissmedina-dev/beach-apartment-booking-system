@@ -3,6 +3,7 @@
 require_once("../config/connection.php");
 require_once("../helpers/auth.php");
 require_once("../helpers/flash.php");
+require_once("../dao/ReservationDAO.php");
 
 session_start();
 
@@ -16,10 +17,10 @@ if(!isset($_GET['id'], $_GET['action'])){
 $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 $action = trim($_GET['action']);
 
+$reservationDAO = new ReservationDAO($conn);
+
 
 // Mapeia cada ação permitida para o novo status correspondente.
-// Centralizar aqui evita o bug anterior, onde ações sem mapeamento
-// (approve_cancel / reject_cancel) chegavam até o UPDATE com $status indefinido.
 $actionToStatus = [
     'confirm'        => 'confirmado',
     'cancel'         => 'cancelado',
@@ -41,11 +42,7 @@ if (empty($id) || !isset($actionToStatus[$action])) {
 
 $status = $actionToStatus[$action];
 
-$stmt = $conn->prepare("SELECT status FROM reservations WHERE id = :id");
-$stmt->bindParam(":id", $id);
-$stmt->execute();
-
-$reservation = $stmt->fetch(PDO::FETCH_ASSOC);
+$reservation = $reservationDAO->findByID($id);
 
 $currentStatus = $reservation['status'];
 
@@ -87,10 +84,7 @@ if($reservation['status'] === "cancelado" && $action === "confirm"){
     exit();
 }
 
-$stmt = $conn->prepare("UPDATE reservations SET status = :status WHERE id = :id");
-$stmt->bindParam(":status", $status);
-$stmt->bindParam(":id", $id);
-$stmt->execute();
+$reservationDAO->updateStatus($id, $status);
 
 // Mensagem de sucesso
 setFlash("success","Reserva atualizada com sucesso.");

@@ -2,16 +2,13 @@
     require_once("../config/connection.php");
     require_once("../templates/header.php");
     require_once("../templates/navbar.php");
+    require_once("../dao/ReservationDAO.php");
+
+    $reservationDAO = new ReservationDAO($conn);
 
     // ── Buscar datas ocupadas no banco ──────────────────────────────
     // Apenas reservas ativas (não canceladas)
-    $stmt = $conn->prepare("
-        SELECT checkin_date, checkout_date
-        FROM reservations
-        WHERE status != 'Cancelado'
-    ");
-    $stmt->execute();
-    $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $reservas = $reservationDAO->getUnavailableDates();
 
     // Expande cada reserva em dias individuais ocupados
     $datasOcupadas = [];

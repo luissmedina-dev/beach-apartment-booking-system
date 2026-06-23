@@ -26,7 +26,7 @@ $pendingCancellations = $reservationDAO->countByStatus("cancelamento solicitado"
 $cancelReservations = $reservationDAO->countByStatus("cancelado");
 
 // Receita estimada
-$estimatedRevenue = $reservationDAO->getEstimativedRevenue();
+$estimatedRevenue = $reservationDAO->getEstimatedRevenue();
 
 require_once("../templates/admin_header.php");
 ?>

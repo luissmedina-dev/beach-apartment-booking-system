@@ -20,7 +20,7 @@ class ReservationDAO {
         return $stmt->fetchColumn();
     }
 
-    public function getEstimativedRevenue(){
+    public function getEstimatedRevenue(){
 
         $stmt = $this->conn->prepare("SELECT SUM(total_price) FROM reservations WHERE status = 'confirmado'");
 
@@ -87,7 +87,7 @@ class ReservationDAO {
 
         if(!empty($search)){
             $conditions[] = "users.name LIKE :search";
-            $params[':search'] = "%"."search"."%";
+            $params[':search'] = "%".$search."%";
         }
 
         if(!empty($dateFrom)){
@@ -118,12 +118,87 @@ class ReservationDAO {
 
     }
 
-    public function getStatusSumary(){
+    public function getStatusSummary(){
         return [
             "solicitado" => $this->countByStatus("solicitado"),
             "confirmado" => $this->countByStatus("confirmado"),
             "cancelado" => $this->countByStatus("cancelado"),
             "cancelamento solicitado" => $this->countByStatus("cancelamento solicitado")
         ];
+    }
+
+    public function findByID($id){
+
+        $stmt = $this->conn->prepare("SELECT status FROM reservations WHERE id = :id");
+
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+
+    public function updateStatus($id, $status){
+
+        $stmt = $this->conn->prepare("UPDATE reservations SET status = :status WHERE id = :id");
+
+        $stmt->bindParam(":status", $status);
+        $stmt->bindParam(":id", $id);
+
+        return $stmt->execute();
+
+    }
+
+    public function getUnavailableDates(){
+
+        $stmt = $this->conn->prepare("SELECT checkin_date,checkout_date FROM reservations WHERE status IN ('confimado', 'cancelamento solicitado')");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function checkAvailability($checkin, $checkout){
+
+        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM reservations WHERE status IN ('confirmado', 'cancelamento solicitado') AND checkin_date < :checkout AND checkout_date > :checkin");
+
+        $stmt->bindParam(":checkin", $checkin);
+        $stmt->bindParam(":checkout", $checkout);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn() == 0;
+    }
+
+    public function createReservation($user_id, $checkin, $checkout, $total_price, $status){
+
+        $stmt = $this->conn->prepare("INSERT INTO
+                                    (
+                                        user_id,
+                                        checkin_date,
+                                        checkout_date,
+                                        total_price,
+                                        status
+                                    )
+
+                                    VALUES
+                                    (
+                                        :user_id,
+                                        :checkin,
+                                        :checkout,
+                                        :total_price,
+                                        :status
+                                    )
+        ");
+
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->bindParam(":checkin", $checkin);
+        $stmt->bindParam(":checkout", $checkout);
+        $stmt->bindParam(":total_price", $total_price);
+        $stmt->bindParam(":status", $status);
+
+        return $stmt->execute();
+
     }
 }

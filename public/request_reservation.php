@@ -1,11 +1,13 @@
 <?php
 
 require_once("../config/connection.php");
+require_once("../dao/ReservationDAO.php");
 
 session_start();
 
 $errors  = [];
 $success = false;
+$reservationDAO = new ReservationDAO($conn);
 
 if(!isset($_SESSION['user_id'])) {
     header("Location: ../client/login.php");
@@ -14,13 +16,7 @@ if(!isset($_SESSION['user_id'])) {
 
 // ── Buscar datas ocupadas no banco ──────────────────────────────────────────
 // Considera reservas que NÃO foram canceladas
-$stmtOcupadas = $conn->prepare("
-    SELECT checkin_date, checkout_date
-    FROM reservations
-    WHERE status != 'Cancelado'
-");
-$stmtOcupadas->execute();
-$reservasOcupadas = $stmtOcupadas->fetchAll(PDO::FETCH_ASSOC);
+$reservasOcupadas = $reservationDAO->getUnavailableDates();
 
 // Gera array de datas ocupadas (YYYY-MM-DD) para passar ao JavaScript
 $datasOcupadas = [];
@@ -50,27 +46,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if(empty($errors)) {
-        $user_id     = $_SESSION['user_id'];
-        $status      = 'solicitado';
-        $daily_price = 300;
 
-        $entrada     = new DateTime($checkin);
-        $saida       = new DateTime($checkout);
-        $days        = $entrada->diff($saida)->days;
+        if(!$reservationDAO->checkAvailability($checkin, $checkout)){
+
+            $errors[] = "Essas datas já estão reservadas.";
+
+        }
+
+        if(empty($errors)){
+
+        $user_id = $_SESSION['user_id'];
+        $status = "solicitado";
+        $daily_price = 300;
+        $entrada = new DateTime($checkin);
+        $saida = new DateTime($checkout);
+        $days = $entrada->diff($saida)->days;
         $total_price = $days * $daily_price;
 
-        $stmt = $conn->prepare('INSERT INTO reservations
-                                (user_id, checkin_date, checkout_date, total_price, status)
-                                VALUES
-                                (:user_id, :checkin, :checkout, :total_price, :status)');
-        $stmt->bindParam(':user_id',     $user_id);
-        $stmt->bindParam(':checkin',     $checkin);
-        $stmt->bindParam(':checkout',    $checkout);
-        $stmt->bindParam(':total_price', $total_price);
-        $stmt->bindParam(':status',      $status);
-        $stmt->execute();
+        $reservationDAO->createReservation($user_id, $checkin, $checkout, $total_price, $status);
 
         $success = true;
+
+        }
+
     }
 }
 
