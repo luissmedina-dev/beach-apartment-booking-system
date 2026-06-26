@@ -2,6 +2,7 @@
 
 require_once("../config/connection.php");
 require_once("../dao/UserDAO.php");
+require_once("../models/User.php");
 
 session_start();
 
@@ -49,7 +50,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         if($existingUser) {
             $errors[] = "Este e-mail já está cadastrado.";
         } else {
-            $userDAO->createUser($name, $email, $password, $role);
+            $user = new User($name, $email, $password, $role);
+            
+            $userDAO->createUser($user);
             $success = true;
         }
     }

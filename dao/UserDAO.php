@@ -1,5 +1,7 @@
 <?php 
 
+require_once("../models/User.php");
+
 class UserDAO {
 
     private $conn;
@@ -20,20 +22,24 @@ class UserDAO {
 
     }
 
-    public function createUser($name, $email, $password, $role){
+    public function createUser(User $user){
 
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $passwordHash = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+
+        $name = $user->getName();
+        $email = $user->getEmail();
+        $role = $user->getRole();
 
         $stmt = $this->conn->prepare("INSERT INTO users
                                         (name, email, password, role, created_at, updated_at)
                                     VALUES 
-                                        (:name, :email, :password, :role, NOW(), NOW()
+                                        (:name, :email, :password, :role, NOW(), NOW())
                                     ");
         
-        $stmt->bindParam(":name", $name);
-        $stmt->bindParam(":email", $email);
-        $stmt->bindParam(":password", $password);
-        $stmt->bindParam(":role", $role);
+        $stmt->bindParam(":name",$name);
+        $stmt->bindParam(":email",$email);
+        $stmt->bindParam(":password",$passwordHash);
+        $stmt->bindParam(":role",$role);
 
         return $stmt->execute();
 
