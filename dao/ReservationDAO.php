@@ -171,7 +171,7 @@ class ReservationDAO {
         return $stmt->fetchColumn() == 0;
     }
 
-    public function createReservation($user_id, $checkin, $checkout, $total_price, $status){
+    public function createReservation(Reservation $reservation){
 
         $stmt = $this->conn->prepare("INSERT INTO reservations
                                     (
@@ -192,10 +192,16 @@ class ReservationDAO {
                                     )
         ");
 
+        $user_id = $reservation->getUserId();
+        $checkin = $reservation->getCheckinDate();
+        $checkout = $reservation->getCheckoutDate();
+        $price = $reservation->getTotalPrice();
+        $status = $reservation->getStatus();
+
         $stmt->bindParam(":user_id", $user_id);
         $stmt->bindParam(":checkin", $checkin);
         $stmt->bindParam(":checkout", $checkout);
-        $stmt->bindParam(":total_price", $total_price);
+        $stmt->bindParam(":total_price", $price);
         $stmt->bindParam(":status", $status);
 
         return $stmt->execute();

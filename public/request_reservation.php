@@ -2,6 +2,7 @@
 
 require_once("../config/connection.php");
 require_once("../dao/ReservationDAO.php");
+require_once("../models/Reservation.php");
 
 session_start();
 
@@ -70,7 +71,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $days = $entrada->diff($saida)->days;
         $total_price = $days * $daily_price;
 
-        $reservationDAO->createReservation($user_id, $checkin, $checkout, $total_price, $status);
+        $reservation = new Reservation($user_id, $checkin, $checkout, $total_price, "solicitado");
+
+        $reservationDAO->createReservation($reservation);
 
         $success = true;
 
