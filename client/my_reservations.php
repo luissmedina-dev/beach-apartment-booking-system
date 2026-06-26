@@ -1,8 +1,10 @@
 <?php
 
 require_once("../config/connection.php");
+require_once("../dao/ReservationDAO.php");
 
 session_start();
+$resevationDAO = new ReservationDAO($conn);
 
 if(!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -11,10 +13,7 @@ if(!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$stmt = $conn->prepare("SELECT * FROM reservations WHERE user_id = :user_id ORDER BY checkin_date DESC");
-$stmt->bindParam(":user_id", $user_id);
-$stmt->execute();
-$reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$reservations = $resevationDAO->getReservationsByUser($user_id);
 
 require_once("../templates/header.php");
 require_once("../templates/navbar.php");

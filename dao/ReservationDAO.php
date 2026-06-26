@@ -201,4 +201,72 @@ class ReservationDAO {
         return $stmt->execute();
 
     }
+
+    public function getReservationsByUser($user_id){
+
+        $stmt = $this->conn->prepare("SELECT id, checkin_date, checkout_date, total_price, status FROM reservations WHERE user_id = :user_id ORDER BY checkin_date DESC");
+
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function getLatestByUser($user_id, $limit = 5){
+
+        $stmt = $this->conn->prepare("SELECT id, checkin_date, checkout_date, total_price, status FROM reservations WHERE user_id = :user_id ORDER BY checkin_date DESC LIMIT $limit");
+
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function countByUser($user_id){
+
+        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM reservations WHERE user_id = :user_id");
+
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+
+    }
+
+    public function conutConfirmedByUser($user_id){
+
+        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM reservations WHERE user_id = :user_id AND status = 'confirmado'");
+
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+
+    }
+
+    public function sumValueByUser($user_id){
+
+        $stmt = $this->conn->prepare("SELECT SUM(total_price) FROM reservations WHERE user_id = :user_id AND status != 'cancelado'");
+
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->execute();
+
+        return $stmt->fetchColumn() ?? 0;
+
+    }
+
+    public function findByIdAndUser($reservation_id, $user_id){
+
+        $stmt = $this->conn->prepare("SELECT id, status FROM reservations WHERE id = :id AND user_id = :user_id");
+
+        $stmt->bindParam(":id", $reservation_id);
+        $stmt->bindParam(":user_id", $user_id);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
 }

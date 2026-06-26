@@ -1,12 +1,14 @@
 <?php
 
 require_once("../config/connection.php");
+require_once("../dao/UserDAO.php");
 
 session_start();
 
 $errors = [];
 $success = false;
 $role = "client";
+$userDAO = new UserDAO($conn);
 
 
 if(isset($_SESSION['user_id'])) {
@@ -42,22 +44,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if(empty($errors)) {
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
-        $stmt->bindParam(":email", $email);
-        $stmt->execute();
-        $existingUser = $stmt->fetch();
+        $existingUser = $userDAO->findByEmail($email);
 
         if($existingUser) {
             $errors[] = "Este e-mail já está cadastrado.";
         } else {
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO users (name, email, password, role, created_at, updated_at)
-                                    VALUES (:name, :email, :password, :role, NOW(), NOW())");
-            $stmt->bindParam(":name", $name);
-            $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":password", $passwordHash);
-            $stmt->bindParam(":role", $role);
-            $stmt->execute();
+            $userDAO->createUser($name, $email, $password, $role);
             $success = true;
         }
     }

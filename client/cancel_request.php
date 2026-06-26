@@ -4,6 +4,7 @@ require_once("../config/connection.php");
 require_once("../dao/ReservationDAO.php");
 
 session_start();
+$reservationDAO = new ReservationDAO($conn);
 
 if(!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -22,11 +23,7 @@ $user_id        = $_SESSION['user_id'];
 $reservationDAO = new ReservationDAO($conn);
 
 // Busca a reserva garantindo que pertence a este usuário
-$stmt = $conn->prepare("SELECT status FROM reservations WHERE id = :id AND user_id = :user_id");
-$stmt->bindParam(":id",      $reservation_id);
-$stmt->bindParam(":user_id", $user_id);
-$stmt->execute();
-$reservation = $stmt->fetch(PDO::FETCH_ASSOC);
+$reservation = $reservationDAO->findByIdAndUser($reservation_id, $user_id);
 
 // Reserva não existe ou não pertence ao usuário logado
 if(!$reservation) {

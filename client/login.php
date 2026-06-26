@@ -1,8 +1,10 @@
 <?php
 
 require_once("../config/connection.php");
+require_once("../dao/UserDAO.php");
 
 $errors = [];
+$userDAO = new UserDAO($conn);
 
 session_start();
 
@@ -16,10 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim(filter_input(INPUT_POST, "email"));
     $password = filter_input(INPUT_POST, "password");
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
-    $stmt->bindParam(":email", $email);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $userDAO->findByEmailWithPassword($email);
 
     if($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];

@@ -1,6 +1,10 @@
 <?php
 
+require_once("../config/connection.php");
+require_once("../dao/ReservationDAO.php");
+
 session_start();
+$reservationDAO = new ReservationDAO($conn);
 
 if(!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -13,26 +17,14 @@ $user_id   = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'];
 
 // Busca reservas do usuário (últimas 5 para o dashboard)
-$stmt = $conn->prepare("SELECT * FROM reservations WHERE user_id = :user_id ORDER BY checkin_date DESC LIMIT 5");
-$stmt->bindParam(":user_id", $user_id);
-$stmt->execute();
-$reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$reservations = $reservationDAO->getLatestByUser($user_id);
 
 // Contagens para os cards de resumo
-$stmtTotal = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE user_id = :user_id");
-$stmtTotal->bindParam(":user_id", $user_id);
-$stmtTotal->execute();
-$totalReservations = $stmtTotal->fetchColumn();
+$totalReservations = $reservationDAO->countByUser($user_id);
 
-$stmtConfirmed = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE user_id = :user_id AND status = 'confirmado'");
-$stmtConfirmed->bindParam(":user_id", $user_id);
-$stmtConfirmed->execute();
-$confirmedReservations = $stmtConfirmed->fetchColumn();
+$confirmedReservations = $reservationDAO->conutConfirmedByUser($user_id);
 
-$stmtValue = $conn->prepare("SELECT SUM(total_price) FROM reservations WHERE user_id = :user_id AND status != 'cancelado'");
-$stmtValue->bindParam(":user_id", $user_id);
-$stmtValue->execute();
-$totalValue = $stmtValue->fetchColumn() ?? 0;
+$totalValue = $reservationDAO->sumValueByUser($user_id);
 
 // Iniciais do nome para o avatar
 $nameParts = explode(" ", trim($user_name));
